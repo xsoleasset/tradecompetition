@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trading Competition – XsoleTrades</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(270deg, #1e1e1e, #111111);
+      background-size: 400% 400%;
+      animation: gradientBG 0s ease infinite;
+      color: #fff;
+      padding: 2rem;
+    }
+
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    /* ✅ Typing animation that wraps and is faster */
+    .typing-heading {
+      display: inline-block;
+      white-space: normal;
+      overflow: hidden;
+      border-right: 3px solid #1e90ff;
+      font-size: 1.8rem;
+      max-width: 100%;
+      animation: typing 0s steps(60, end) forwards, blink 0.7s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      from, to { border-color: transparent; }
+      50% { border-color: #1e90ff; }
+    }
+
+    h2 {
+      color: #1e90ff;
+      text-align: center;
+    }
+
+    .rules, .signup, .leaderboard, .prizes {
+      background: rgba(0,0,0,0.8);
+      padding: 1rem;
+      margin: 2rem auto;
+      border-radius: 10px;
+      max-width: 700px;
+      box-shadow: 0 0 15px rgba(30,144,255,0.2);
+      animation: fadeInUp 1s ease;
+    }
+
+    button {
+      background: #1e90ff;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes fadeInUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(30,144,255, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(30,144,255, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(30,144,255, 0); }
+    }
+
+    .user-info {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 1rem;
+      color: #ccc;
+    }
+
+    .tiktok-note {
+      margin-top: 1rem;
+      background: #111;
+      padding: 0.8rem;
+      border-left: 4px solid #ff0050;
+      font-size: 0.95rem;
+      color: #ccc;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- ✅ Typing heading inside wrapper -->
+  <div style="text-align: center;">
+    <h1 class="typing-heading" id="typingText">
+      ✅📈 XsoleTrades 15-Day Trading Challenge 🚀💰
+    </h1>
+  </div>
+
+  <section class="rules">
+    <h2>📜 Rules</h2>
+    <ul>
+      <li>Use Exness Demo account only</li>
+      <li>Trading period: August 1st – August 15th</li>
+      <li>No martingale or grid allowed</li>
+      <li>Minimum balance: $1,000 demo</li>
+      <li>Maximum 100 competitors</li>
+      <li>Highest return wins</li>
+      <li>Daily loss limit: Max $500 (5%)</li>
+      <li>Total drawdown: Max $1,000 (10%)</li>
+      <li>Max lot size per trade: 1.0</li>
+      <li>Max trades open at once: 5 positions</li>
+      <li>✅ News trading is allowed</li>
+    </ul>
+    <p><strong>📊 Slots filled: 46 / 100</strong></p>
+  </section>
+
+  <section class="signup">
+    <h2>✍️ Join the Competition</h2>
+    <p>Send your Exness demo login (read-only) and $10 registration fee to our WhatsApp:</p>
+    <a href="https://wa.me/2347015095874?text=I%20want%20to%20join%20the%20XsoleTrades%20Competition!" target="_blank">
+      <button>Join via WhatsApp</button>
+    </a>
+    <p><em>💳 Payment methods: Bank Transfer, Crypto (USDT), Opay, Palmpay</em></p>
+  </section>
+
+  <section class="leaderboard">
+    <h2>🏆 Current Leaderboard</h2>
+    <ol>
+      <li>TraderK – $1,920</li>
+      <li>SmartPipz – $1,850</li>
+      <li>ScalperBoy – $1,700</li>
+    </ol>
+    <p><em>Updated every 24 hours</em></p>
+    <div class="tiktok-note">
+      📺 <strong>Note:</strong> Final winners will be announced <strong>LIVE on TikTok</strong> to ensure full transparency!
+    </div>
+  </section>
+
+  <section class="prizes">
+    <h2>🎁 Prizes</h2>
+    <ul>
+      <li>🥇 1st Place – $100 Funded Account</li>
+      <li>🥈 2nd Place – Free Mentorship</li>
+      <li>🥉 3rd Place – 1 Month VIP Signals</li>
+    </ul>
+  </section>
+
+  <div class="user-info" id="userInfo">
+    🌍 Detecting your country and time...
+  </div>
+
+  <script>
+    let userCountry = "your location";
+
+    async function getUserInfo() {
+      try {
+        const res = await fetch('https://ipapi.co/json/');
+        const data = await res.json();
+        userCountry = data.country_name;
+      } catch (e) {
+        userCountry = "Unknown Country";
+      }
+    }
+
+    function updateTime() {
+      const now = new Date().toLocaleTimeString();
+      document.getElementById("userInfo").innerHTML =
+        `📍 You are visiting from <strong>${userCountry}</strong> – Current Time: <strong>${now}</strong>`;
+    }
+
+    async function start() {
+      await getUserInfo();
+      updateTime();
+      setInterval(updateTime, 1000);
+    }
+
+    start();
+
+    // 🔁 Restart typing animation on scroll
+    window.addEventListener('scroll', () => {
+      const heading = document.getElementById('typingText');
+      const position = heading.getBoundingClientRect();
+      if (position.top >= 0 && position.top <= window.innerHeight) {
+        heading.style.animation = 'none';
+        void heading.offsetWidth;
+        heading.style.animation = 'typing 0s steps(60, end) forwards, blink 0.7s step-end infinite';
+      }
+    });
+  </script>
+</body>
+</html>
